@@ -18,6 +18,10 @@ public class ChatClientLoginFrame extends JFrame {
 
     private JLabel serverAddressLabel;
 
+    private JPasswordField passwordField;
+
+    private JLabel passwordLabel;
+
     private JButton loginButton;
 
     private Image image = getImage("https://support.apple.com/library/APPLE/APPLECARE_ALLGEOS/Product_Help/ru_RU/PUBLIC_USERS/134327/IC_messages_64.png");
@@ -35,25 +39,31 @@ public class ChatClientLoginFrame extends JFrame {
 
         Font font = new Font("Arial", Font.PLAIN, 20);
 
-        this.loginTextField = new JTextField();
         this.loginLabel = new JLabel("Login:");
-        this.serverAddressTextField = new JTextField();
+        this.loginTextField = new JTextField();
         this.serverAddressLabel = new JLabel("Server address:");
+        this.serverAddressTextField = new JTextField();
+        this.passwordLabel = new JLabel("Password:");
+        this.passwordField = new JPasswordField();
         this.loginButton = new JButton("Login");
 
         this.loginButton.setFont(font);
         this.loginLabel.setFont(font);
         this.loginTextField.setFont(font);
-        this.serverAddressTextField.setFont(font);
         this.serverAddressLabel.setFont(font);
+        this.serverAddressTextField.setFont(font);
+        this.passwordLabel.setFont(font);
+        this.passwordField.setFont(font);
 
         JPanel jPanel = new JPanel();
-        jPanel.setLayout(new GridLayout(2, 2));
+        jPanel.setLayout(new GridLayout(3, 2));
 
         jPanel.add(this.loginLabel);
         jPanel.add(this.loginTextField);
         jPanel.add(this.serverAddressLabel);
         jPanel.add(this.serverAddressTextField);
+        jPanel.add(this.passwordLabel);
+        jPanel.add(this.passwordField);
 
         this.add(jPanel, BorderLayout.CENTER);
         this.add(this.loginButton, BorderLayout.SOUTH);
@@ -89,12 +99,12 @@ public class ChatClientLoginFrame extends JFrame {
             try {
                 chatClient = new ChatClient(host, port);
             } catch (IOException e1) {
-                error(String.format("Can't connect to server by adress=[%s:%s]", host, port));
+                error(String.format("Can't connect to server by adress %s:%s", host, port));
                 return;
             }
             try {
                 if (!chatClient.login(login)) {
-                    error(String.format("Can't connect to server by login=[%s]", login));
+                    error(String.format("Can't connect to server by login %s", login));
                     return;
                 }
             } catch (IOException e1) {

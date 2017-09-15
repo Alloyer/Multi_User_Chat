@@ -17,7 +17,7 @@ public class ChatServerClient implements Runnable {
         this.server = chatServer;
         this.reader = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
         this.writer = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
-        //login
+
         this.login = this.reader.readLine();
         System.out.println(String.format("Try add new user %s", this.login));
         if (chatServer.getClients().contains(this)) {
