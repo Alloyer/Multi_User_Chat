@@ -1,8 +1,11 @@
 package client;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.URL;
 
 public class ChatClientFrame extends JFrame implements ChatClient.ReceiveMessage {
 
@@ -15,6 +18,8 @@ public class ChatClientFrame extends JFrame implements ChatClient.ReceiveMessage
     private ChatClientLoginFrame loginFrame;
 
     private ChatClient chatClient;
+
+    private Image image = getImage("https://support.apple.com/library/APPLE/APPLECARE_ALLGEOS/Product_Help/ru_RU/PUBLIC_USERS/134327/IC_messages_64.png");
 
     public ChatClientFrame(String login, ChatClientLoginFrame loginFrame, ChatClient chatClient) throws HeadlessException {
         this.login = login;
@@ -37,6 +42,8 @@ public class ChatClientFrame extends JFrame implements ChatClient.ReceiveMessage
         JPanel sendPanel = new JPanel(new BorderLayout());
         this.sendTextField = new JTextField();
         this.sendButton = new JButton("SEND");
+
+        this.setIconImage(image == null ? (new ImageIcon("C:\\Users\\alloyer\\IdeaProjects\\Java2Lesson3\\resource\\Icon.png")).getImage() : image);
 
         this.messageTextArea.setFont(font);
         this.sendTextField.setFont(font);
@@ -73,6 +80,22 @@ public class ChatClientFrame extends JFrame implements ChatClient.ReceiveMessage
             this.setVisible(false);
         }
         this.sendTextField.setText("");
+    }
+
+    private Image getImage(String urlString) {
+        try
+        {
+            URL url = new URL(urlString);
+            BufferedImage bufferedImage = ImageIO.read(url);
+            ImageIcon imageIcon = new ImageIcon(bufferedImage);
+            Image image = imageIcon.getImage();
+            return image;
+        }
+        catch (Throwable e)
+        {
+            System.err.println("Unable to load picture for chat frame. Default will be set.");
+        }
+        return null;
     }
 
     @Override

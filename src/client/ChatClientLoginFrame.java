@@ -5,7 +5,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 public class ChatClientLoginFrame extends JFrame {
@@ -96,21 +95,31 @@ public class ChatClientLoginFrame extends JFrame {
                 return;
             }
             ChatClient chatClient;
-            try {
+
+            try
+            {
                 chatClient = new ChatClient(host, port);
-            } catch (IOException e1) {
+            }
+            catch (IOException ioe)
+            {
                 error(String.format("Can't connect to server by adress %s:%s", host, port));
                 return;
             }
-            try {
-                if (!chatClient.login(login)) {
+
+            try
+            {
+                if (!chatClient.login(login))
+                {
                     error(String.format("Can't connect to server by login %s", login));
                     return;
                 }
-            } catch (IOException e1) {
+            }
+            catch (IOException e1)
+            {
                 error("Connection error. Try later.");
                 return;
             }
+
             ChatClientFrame chatClientFrame = new ChatClientFrame(login, loginFrame, chatClient);
             chatClientFrame.setVisible(true);
             loginFrame.setVisible(false);
@@ -130,16 +139,9 @@ public class ChatClientLoginFrame extends JFrame {
             Image image = imageIcon.getImage();
             return image;
         }
-        catch (MalformedURLException e)
+        catch (Throwable e)
         {
-            e.printStackTrace();
-        } catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
+            System.err.println("Unable to load picture for login frame. Default will be set.");
         }
         return null;
     }

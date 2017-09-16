@@ -17,7 +17,7 @@ public class ChatServerClient implements Runnable {
         this.server = chatServer;
         this.reader = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
         this.writer = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
-
+        //считывание login-а из ChatClient.login()
         this.login = this.reader.readLine();
         System.out.println(String.format("Try add new user %s", this.login));
         if (chatServer.getClients().contains(this)) {
@@ -27,10 +27,10 @@ public class ChatServerClient implements Runnable {
         } else {
             System.out.println(String.format("Add new user %s", this.login));
             writeMessage("ok");
-            writeMessageAll(String.format("Hello, add new user %s", this.login));
             this.server.getClients().add(this);
             Thread thread = new Thread(this);
             thread.start();
+            writeMessageAll(String.format("Hello, add new user %s", this.login));
         }
     }
 
