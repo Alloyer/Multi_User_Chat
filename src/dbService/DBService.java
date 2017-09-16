@@ -16,9 +16,13 @@ import java.sql.SQLException;
 
 public class DBService {
     private static final String hibernate_show_sql = "true";
-    private static final String hibernate_hbm2ddl_auto = "create";
+    private static final String hibernate_hbm2ddl_auto = "update";
 
     private final SessionFactory sessionFactory;
+
+    private String DBName;
+    private String login;
+    private String password;
 
     public DBService() {
         Configuration configuration = getMySqlConfiguration();
@@ -32,9 +36,9 @@ public class DBService {
 
         configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
         configuration.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
-        configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/db_example");
-        configuration.setProperty("hibernate.connection.username", "tully");
-        configuration.setProperty("hibernate.connection.password", "tully");
+        configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/chat_db");
+        configuration.setProperty("hibernate.connection.username", "root");
+        configuration.setProperty("hibernate.connection.password", "123456");
         configuration.setProperty("hibernate.show_sql", hibernate_show_sql);
         configuration.setProperty("hibernate.hbm2ddl.auto", hibernate_hbm2ddl_auto);
         return configuration;
@@ -52,12 +56,12 @@ public class DBService {
         }
     }
 
-    public long addUser(String name) throws DBException {
+    public long addUser(String name, String password) throws DBException {
         try {
             Session session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();
             UsersDAO dao = new UsersDAO(session);
-            long id = dao.insertUser(name);
+            long id = dao.insertUser(name, password);
             transaction.commit();
             session.close();
             return id;

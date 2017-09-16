@@ -1,9 +1,27 @@
 package server;
 
+import dbService.DBService;
+
 import java.io.IOException;
 import java.util.Scanner;
 
 public class App {
+
+    private static DBService dbService;
+
+    public static DBService getDBService()
+    {
+        if(dbService == null)
+        {
+            dbService = new DBService();
+            return dbService;
+        }
+        else
+        {
+            return dbService;
+        }
+    }
+
     public static void main(String[] args) throws IOException {
         ChatServer chatServer = new ChatServer(9999);
         Thread thread = new Thread(chatServer);

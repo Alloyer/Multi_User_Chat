@@ -15,6 +15,9 @@ public class UsersDataSet implements Serializable {
     @Column(name = "name", unique = true, updatable = false)
     private String name;
 
+    @Column(name = "password")
+    private int password;
+
     @SuppressWarnings("UnusedDeclaration")
     public UsersDataSet() {
     }
@@ -25,9 +28,25 @@ public class UsersDataSet implements Serializable {
         this.setName(name);
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public UsersDataSet(String name) {
         this.setId(-1);
         this.setName(name);
+    }
+
+    public UsersDataSet(String name, String password)
+    {
+        this.setId(-1);
+        this.setName(name);
+        this.setPassword(password.hashCode());
+    }
+
+    public int getPassword() {
+        return password;
+    }
+
+    public void setPassword(int passwordHash) {
+        this.password = passwordHash;
     }
 
     @SuppressWarnings("UnusedDeclaration")

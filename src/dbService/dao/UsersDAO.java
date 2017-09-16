@@ -23,7 +23,7 @@ public class UsersDAO {
         return ((UsersDataSet) criteria.add(Restrictions.eq("name", name)).uniqueResult()).getId();
     }
 
-    public long insertUser(String name) throws HibernateException {
-        return (Long) session.save(new UsersDataSet(name));
+    public long insertUser(String name, String password) throws HibernateException {
+        return (Long) session.save(new UsersDataSet(name, password));
     }
 }

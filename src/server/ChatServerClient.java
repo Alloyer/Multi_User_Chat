@@ -17,14 +17,19 @@ public class ChatServerClient implements Runnable {
         this.server = chatServer;
         this.reader = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
         this.writer = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
+
         //считывание login-а из ChatClient.login()
         this.login = this.reader.readLine();
+
         System.out.println(String.format("Try add new user %s", this.login));
-        if (chatServer.getClients().contains(this)) {
+        if (chatServer.getClients().contains(this))
+        {
             System.out.println(String.format("User with login already exist %s", this.login));
             writeMessage("user by login already exist");
             close();
-        } else {
+        }
+        else
+        {
             System.out.println(String.format("Add new user %s", this.login));
             writeMessage("ok");
             this.server.getClients().add(this);
@@ -35,13 +40,18 @@ public class ChatServerClient implements Runnable {
     }
 
     @Override
-    public void run() {
-        while (true) {
-            try {
+    public void run()
+    {
+        while (true)
+        {
+            try
+            {
                 String message = this.reader.readLine();
                 System.out.println(String.format("user %s write message [%s]", this.login, message));
                 writeMessageAll(String.format("%s: %s", this.login, message));
-            } catch (IOException e) {
+            }
+            catch (IOException e)
+            {
                 System.out.println(String.format("user %s disconnect", this.login));
                 close();
                 this.server.getClients().remove(this);

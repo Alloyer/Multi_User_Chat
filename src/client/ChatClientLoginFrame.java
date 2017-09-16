@@ -1,5 +1,7 @@
 package client;
 
+import dbService.DBException;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -104,6 +106,15 @@ public class ChatClientLoginFrame extends JFrame {
             {
                 error(String.format("Can't connect to server by adress %s:%s", host, port));
                 return;
+            }
+
+            try
+            {
+                server.App.getDBService().addUser(login, passwordField.getPassword().toString());
+            }
+            catch (DBException DBe)
+            {
+                DBe.printStackTrace();
             }
 
             try
